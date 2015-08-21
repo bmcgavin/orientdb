@@ -67,8 +67,8 @@ public class OIndexUnique extends OIndexOneValue {
             if (!value.equals(iSingleValue)) {
               final Boolean mergeSameKey = metadata != null ? (Boolean) metadata.field(OIndex.MERGE_KEYS) : Boolean.FALSE;
               if (mergeSameKey != null && mergeSameKey)
-                // IGNORE IT, THE EXISTENT KEY HAS BEEN MERGED
-                ;
+                // Need to delete the newly created edge
+                iSingleValue.getRecord().delete();
               else
                 throw new ORecordDuplicatedException(String.format(
                     "Cannot index record %s: found duplicated key '%s' in index '%s' previously assigned to the record %s",
